@@ -22,7 +22,7 @@
     <div class="shop-card" *ngFor="let shop of shopsList" >
       <div class="shop-payment">
         <div class="payment-icons" >
-          <span  class="payment-badge" [ngClass]="{'nosub':shop.subscription == '','minimal':shop.subscription == 'მინიმალური',}" (click)="showModal(shop.id)">
+          <span  class="payment-badge" [ngClass]="{'nosub':shop.subscription == '','minimal':shop.subscription == 'სტანდარტული',}" (click)="showModal(shop.id)">
             <b style="display: flex; gap: 10px; align-items: center;">
                 <p>
                     <i class="fas fa-close" style="color: red;" *ngIf="!shop.subscription"> </i>
@@ -103,9 +103,9 @@
     <div class="modal-cancel" (click)="hideModal()"></div>
     <div class="modal">
         <div class="button-group" >
-            <button class="sub-button" value="მინიმალური" [ngClass]="{'chosen-sub':openedShop.subscription==''}" (click)="addSubscription('')"><i class="fas fa-close" style="color: red;"></i></button>
-            <button class="sub-button" value="მინიმალური" [ngClass]="{'chosen-sub':openedShop.subscription=='მინიმალური'}" (click)="addSubscription('მინიმალური')">მინიმალური</button>
-            <button class="sub-button" value="პრემიუმი" [ngClass]="{'chosen-sub':openedShop.subscription=='პრემიუმი'}" (click)="addSubscription('პრემიუმი')">პრემიუმი</button>
+            <button class="sub-button"  [ngClass]="{'chosen-sub':openedShop.subscription==''}" (click)="addSubscription('')"><i class="fas fa-close" style="color: red;"></i></button>
+            <button class="sub-button" [ngClass]="{'chosen-sub':openedShop.subscription=='სტანდარტული'}" (click)="addSubscription('სტანდარტული')">სტანდარტული</button>
+            <button class="sub-button"  [ngClass]="{'chosen-sub':openedShop.subscription=='პრემიუმი'}" (click)="addSubscription('პრემიუმი')">პრემიუმი</button>
         </div>
     </div>
 </div>

@@ -3,7 +3,8 @@ import Swal from 'sweetalert2';
 import { AdminService } from '../../services/admin.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { AppRoutes } from '../../shared/appRoutes';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-shop',
   imports: [FormsModule,CommonModule],
@@ -11,7 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './add-shop.component.scss'
 })
 export class AddShopComponent {
-  constructor(private adminService:AdminService){}
+  constructor(private adminService:AdminService, private route:Router){}
   shop :AddShop={
     shopName :'',
     gmail :'',
@@ -22,6 +23,7 @@ export class AddShopComponent {
     if(this.shop.shopName!=''&&this.shop.gmail!=''&&this.shop.password!=''){
       this.adminService.AddShop(this.shop).subscribe(
         (resp)=>{
+          this.route.navigate([AppRoutes.home]);
         }
       )
     }

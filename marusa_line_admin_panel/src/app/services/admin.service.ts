@@ -11,8 +11,8 @@ import { SubscriptionObj } from '../pages/home/home.component';
 export class AdminService {
 
 
- // private apiUrl = 'https://localhost:7173/';
- private apiUrl = 'https://192.168.1.11:7174/';
+  private apiUrl = 'https://localhost:7173/';
+ //private apiUrl = 'https://192.168.1.11:7174/';
   constructor(private http:HttpClient)
   {
 
