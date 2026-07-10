@@ -61,6 +61,18 @@ export class AdminService {
   getPayScheduleByShop(shopId:number, year:number): Observable<PayScheduleDto[]> {
     return this.http.get<PayScheduleDto[]>(this.apiUrl+`Admin/get-pay-schedule-by-shop?shopId=${shopId}&year=${year}`);
   }
+  createPaySchedule(payment:CreatePayScheduleDto): Observable<number> {
+    return this.http.post<number>(this.apiUrl+`Admin/create-pay-schedule`,payment);
+  }
+  deletePaySchedule(id:number): Observable<number> {
+    return this.http.delete<number>(this.apiUrl+`Admin/delete-pay-schedule?id=${id}`);
+  }
+  updateShopPassword(dto:UpdateShopPasswordDto): Observable<any> {
+    return this.http.put<any>(this.apiUrl+`Admin/update-password`,dto);
+  }
+  updateShopEmail(dto:UpdateShopEmailDto): Observable<any> {
+    return this.http.put<any>(this.apiUrl+`Admin/update-email`,dto);
+  }
 }
 export interface Pagination{
     userName:string|null,
@@ -100,4 +112,17 @@ export interface PayScheduleDto {
   shopName: string;
   payDate: string;
   payAmount: number;
+}
+export interface CreatePayScheduleDto {
+  shopId: number;
+  payDate: string;
+  payAmount: number;
+}
+export interface UpdateShopPasswordDto {
+  shopId: number;
+  password: string;
+}
+export interface UpdateShopEmailDto {
+  shopId: number;
+  email: string;
 }

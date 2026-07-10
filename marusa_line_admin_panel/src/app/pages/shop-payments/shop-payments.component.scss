@@ -8,16 +8,25 @@
   gap: 30px;
 }
 
+.page-header-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
 .shop-header {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .shop-logo-container {
-  width: 90px;
-  height: 90px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   overflow: hidden;
   display: flex;
@@ -25,6 +34,7 @@
   justify-content: center;
   background: var(--bg-card);
   box-shadow: var(--shadow-md);
+  flex-shrink: 0;
 }
 
 .shop-logo {
@@ -39,7 +49,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--text-primary);
 }
@@ -47,6 +57,7 @@
 .shop-name {
   color: var(--text-primary);
   margin: 0;
+  font-size: 20px;
 }
 
 .year-switcher {
@@ -171,19 +182,35 @@
     margin: 0 0 8px 0;
   }
 }
-.modal-status {
-  font-weight: 700;
-  font-size: 16px;
-}
-.paid-text {
-  color: #22c55e;
-}
-.unpaid-text {
-  color: #f59e0b;
-}
 .payment-detail {
   color: #ccc;
   margin: 0;
+}
+.amount-options {
+  width: 100%;
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+}
+.amount-option {
+  flex: 1;
+  min-width: 100px;
+  padding: 22px 16px;
+  border-radius: 14px;
+  border: 2px solid #444;
+  background: #201927;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.amount-option:hover {
+  border-color: #667eea;
+}
+.amount-option.selected {
+  border-color: #1a9a25;
+  background: rgba(26, 154, 37, 0.18);
 }
 .modal-action-btn {
   margin-top: 8px;
@@ -195,11 +222,15 @@
   cursor: pointer;
   color: white;
 }
+.modal-action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 .pay-btn {
   background: #1a9a25;
 }
-.delete-btn {
-  background: #dc2626;
+.unpay-btn {
+  background: #e08a1e;
 }
 
 @media screen and (max-width: 600px) {

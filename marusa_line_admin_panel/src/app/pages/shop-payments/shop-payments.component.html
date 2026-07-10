@@ -1,28 +1,30 @@
 <div class="payments-page">
 
-  <div class="shop-header" *ngIf="shop">
-    <div class="shop-logo-container">
-      <img *ngIf="shop.logo" [src]="shop.logo" [alt]="shop.name" class="shop-logo">
-      <div *ngIf="!shop.logo" class="shop-logo-placeholder">
-        {{ shop.name.charAt(0).toUpperCase() }}
+  <div class="page-header-row">
+    <div class="shop-header" *ngIf="shop">
+      <div class="shop-logo-container">
+        <img *ngIf="shop.logo" [src]="shop.logo" [alt]="shop.name" class="shop-logo">
+        <div *ngIf="!shop.logo" class="shop-logo-placeholder">
+          {{ shop.name.charAt(0).toUpperCase() }}
+        </div>
       </div>
+      <h2 class="shop-name">{{ shop.name }}</h2>
     </div>
-    <h2 class="shop-name">{{ shop.name }}</h2>
-  </div>
 
-  <div class="year-switcher">
-    <button class="year-arrow" (click)="previousYear()">
-      <i class="fas fa-chevron-left"></i>
-    </button>
-    <input
-      type="number"
-      class="year-input"
-      [(ngModel)]="selectedYear"
-      (change)="onYearInputChange()"
-    >
-    <button class="year-arrow" (click)="nextYear()">
-      <i class="fas fa-chevron-right"></i>
-    </button>
+    <div class="year-switcher">
+      <button class="year-arrow" (click)="previousYear()">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <input
+        type="number"
+        class="year-input"
+        [(ngModel)]="selectedYear"
+        (change)="onYearInputChange()"
+      >
+      <button class="year-arrow" (click)="nextYear()">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
   </div>
 
   <p *ngIf="isLoading" class="status-message">იტვირთება...</p>
@@ -48,15 +50,21 @@
     <h3>{{ selectedMonth.name }} {{ selectedYear }}</h3>
 
     <ng-container *ngIf="!selectedMonth.isPaid">
-      <p class="modal-status unpaid-text">გადაუხდელია</p>
-      <button class="modal-action-btn pay-btn" (click)="markAsPaid()">მონიშვნა როგორც გადახდილი</button>
+      <div class="amount-options">
+        <button
+          class="amount-option"
+          *ngFor="let amount of amountOptions"
+          [class.selected]="selectedAmount === amount"
+          (click)="selectAmount(amount)"
+        >{{ amount }} ₾</button>
+      </div>
+      <button class="modal-action-btn pay-btn" [disabled]="!selectedAmount" (click)="savePayment()">შენახვა</button>
     </ng-container>
 
     <ng-container *ngIf="selectedMonth.isPaid && selectedMonth.payment">
-      <p class="modal-status paid-text">გადახდილია</p>
       <p class="payment-detail">თარიღი: {{ selectedMonth.payment.payDate | date:'yyyy-MM-dd' }}</p>
       <p class="payment-detail">თანხა: {{ selectedMonth.payment.payAmount | number:'1.2-2' }} ₾</p>
-      <button class="modal-action-btn delete-btn" (click)="deletePaymentAction()">გადახდის წაშლა</button>
+      <button class="modal-action-btn unpay-btn" (click)="deletePaymentAction()">გადახდის წაშლა</button>
     </ng-container>
   </div>
 </div>

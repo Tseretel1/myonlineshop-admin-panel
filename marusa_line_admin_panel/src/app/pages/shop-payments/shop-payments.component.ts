@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
-import { AdminService, PayScheduleDto } from '../../services/admin.service';
+import { AdminService, CreatePayScheduleDto, PayScheduleDto } from '../../services/admin.service';
 import { Shop } from '../shop-details/shop-details.component';
 import { extractErrorMessage } from '../../shared/http-error.util';
 
@@ -90,36 +90,85 @@ export class ShopPaymentsComponent {
     this.loadPayments();
   }
 
+  readonly amountOptions = [99, 149];
+
   modalVisible: boolean = false;
   selectedMonth: MonthSquare | null = null;
+  selectedAmount: number | null = null;
   openMonthModal(month: MonthSquare): void {
     this.selectedMonth = month;
+    this.selectedAmount = null;
     this.modalVisible = true;
   }
   hideModal(): void {
     this.modalVisible = false;
     this.selectedMonth = null;
+    this.selectedAmount = null;
   }
 
-  markAsPaid(): void {
-    Swal.fire({
-      icon: 'info',
-      title: 'ეს ფუნქცია საჭიროებს endpoint-ს',
-      text: 'გადახდის დამატებისთვის საჭიროა insert-payment endpoint-ის მისამართი და request/response ფორმატი — ჯერ არ არის მოწოდებული.',
-      background: 'rgb(25, 26, 25)',
-      color: '#ffffff',
-      confirmButtonColor: 'green',
+  selectAmount(amount: number): void {
+    this.selectedAmount = amount;
+  }
+
+  savePayment(): void {
+    if (!this.selectedMonth || !this.selectedAmount) return;
+    const month = this.selectedMonth;
+    const payDate = new Date(Date.UTC(this.selectedYear, month.monthNumber - 1, 1)).toISOString();
+    const dto: CreatePayScheduleDto = {
+      shopId: this.shopId,
+      payDate,
+      payAmount: this.selectedAmount
+    };
+    this.service.createPaySchedule(dto).subscribe({
+      next: () => {
+        this.hideModal();
+        this.loadPayments();
+        Swal.fire({
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false,
+          background: 'rgb(25, 26, 25)',
+          color: '#ffffff',
+          title: 'გადახდა დამატებულია',
+        });
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          background: 'rgb(25, 26, 25)',
+          color: '#ffffff',
+          confirmButtonColor: 'green',
+          title: extractErrorMessage(err),
+        });
+      }
     });
   }
 
   deletePaymentAction(): void {
-    Swal.fire({
-      icon: 'info',
-      title: 'ეს ფუნქცია საჭიროებს endpoint-ს',
-      text: 'გადახდის წაშლისთვის საჭიროა delete-payment endpoint-ის მისამართი და პარამეტრები — ჯერ არ არის მოწოდებული.',
-      background: 'rgb(25, 26, 25)',
-      color: '#ffffff',
-      confirmButtonColor: 'green',
+    if (!this.selectedMonth?.payment) return;
+    const paymentId = this.selectedMonth.payment.id;
+    this.service.deletePaySchedule(paymentId).subscribe({
+      next: () => {
+        this.hideModal();
+        this.loadPayments();
+        Swal.fire({
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false,
+          background: 'rgb(25, 26, 25)',
+          color: '#ffffff',
+          title: 'გადახდა წაშლილია',
+        });
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          background: 'rgb(25, 26, 25)',
+          color: '#ffffff',
+          confirmButtonColor: 'green',
+          title: extractErrorMessage(err),
+        });
+      }
     });
   }
 }

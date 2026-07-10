@@ -4,6 +4,7 @@ import { AdminService } from '../../services/admin.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { extractErrorMessage } from '../../shared/http-error.util';
 
 @Component({
   selector: 'app-shop-details',
@@ -175,6 +176,82 @@ uploadPhotoToServer() {
   cancelFields(){
     this.fieldseditPermission = false;
     this.RollBack();
+  }
+
+  emailModalVisible: boolean = false;
+  newEmail: string = '';
+  openEmailModal(){
+    this.newEmail = this.shop.gmail;
+    this.emailModalVisible = true;
+  }
+  hideEmailModal(){
+    this.emailModalVisible = false;
+  }
+  saveEmail(){
+    if(!this.newEmail){
+      return;
+    }
+    this.service.updateShopEmail({ shopId: this.shopId, email: this.newEmail }).subscribe({
+      next: () => {
+        this.shop.gmail = this.newEmail;
+        this.hideEmailModal();
+        Swal.fire({
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false,
+          background:'rgb(25, 26, 25)',
+          color: '#ffffff',
+          title: 'მეილი განახლდა',
+        });
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          background:'rgb(25, 26, 25)',
+          color: '#ffffff',
+          confirmButtonColor: 'green',
+          title: extractErrorMessage(err),
+        });
+      }
+    });
+  }
+
+  passwordModalVisible: boolean = false;
+  newPassword: string = '';
+  openPasswordModal(){
+    this.newPassword = '';
+    this.passwordModalVisible = true;
+  }
+  hidePasswordModal(){
+    this.passwordModalVisible = false;
+    this.newPassword = '';
+  }
+  savePassword(){
+    if(!this.newPassword){
+      return;
+    }
+    this.service.updateShopPassword({ shopId: this.shopId, password: this.newPassword }).subscribe({
+      next: () => {
+        this.hidePasswordModal();
+        Swal.fire({
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false,
+          background:'rgb(25, 26, 25)',
+          color: '#ffffff',
+          title: 'პაროლი განახლდა',
+        });
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          background:'rgb(25, 26, 25)',
+          color: '#ffffff',
+          confirmButtonColor: 'green',
+          title: extractErrorMessage(err),
+        });
+      }
+    });
   }
 
   logout(){
