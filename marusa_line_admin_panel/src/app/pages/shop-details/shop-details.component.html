@@ -189,5 +189,30 @@
         <div class="actions"*ngIf="!fieldseditPermission">
           <button class="btn-save btn-edit" style="width: 100%;" (click)="modifyFields()"> <i class="fas fa-marker"></i> რედაქტირება</button>
         </div>
+
+        <div class="social-links payments-section">
+          <h3>გადახდები ({{selectedYear}})</h3>
+
+          <p *ngIf="isLoadingPayments" class="payments-status">იტვირთება...</p>
+          <p *ngIf="paymentsErrorMessage" class="payments-status payments-error">{{paymentsErrorMessage}}</p>
+          <p *ngIf="!isLoadingPayments && !paymentsErrorMessage && payments.length===0" class="payments-status">
+            {{selectedYear}} წელს გადახდები არ დაფიქსირებულა
+          </p>
+
+          <table class="payments-table" *ngIf="!isLoadingPayments && !paymentsErrorMessage && payments.length>0">
+            <thead>
+              <tr>
+                <th>თარიღი</th>
+                <th>თანხა</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of payments">
+                <td>{{p.payDate | date:'yyyy-MM-dd'}}</td>
+                <td>{{p.payAmount | number:'1.2-2'}} ₾</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>

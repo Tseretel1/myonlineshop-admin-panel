@@ -52,6 +52,15 @@ export class AdminService {
   GetusersList(filter:Pagination): Observable<GetusersDto[]> {
     return this.http.post<GetusersDto[]>(this.apiUrl+`Admin/get-users`,filter);
   }
+  login(credentials:AdminLoginRequest): Observable<AdminLoginResponse> {
+    return this.http.post<AdminLoginResponse>(this.apiUrl+`Admin/login`,credentials);
+  }
+  createAdmin(newAdmin:CreateAdminRequest): Observable<number> {
+    return this.http.post<number>(this.apiUrl+`Admin/create-admin`,newAdmin);
+  }
+  getPayScheduleByShop(shopId:number, year:number): Observable<PayScheduleDto[]> {
+    return this.http.get<PayScheduleDto[]>(this.apiUrl+`Admin/get-pay-schedule-by-shop?shopId=${shopId}&year=${year}`);
+  }
 }
 export interface Pagination{
     userName:string|null,
@@ -71,4 +80,24 @@ export interface GetusersDto {
   paidOrdersCount: number,
   unPaidOrdersCount: number,
   isBlocked: boolean,
+}
+export interface AdminLoginRequest {
+  userName: string;
+  password: string;
+}
+export interface AdminLoginResponse {
+  succeeded: boolean;
+  token: string;
+}
+export interface CreateAdminRequest {
+  adminName: string;
+  userName: string;
+  password: string;
+}
+export interface PayScheduleDto {
+  id: number;
+  shopId: number;
+  shopName: string;
+  payDate: string;
+  payAmount: number;
 }

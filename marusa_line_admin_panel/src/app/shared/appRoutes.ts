@@ -5,4 +5,5 @@ export const AppRoutes = {
   shopDetails: '/shop-details/',
   addShop: '/add-shop/',
   users: '/users',
+  login: '/login',
 };

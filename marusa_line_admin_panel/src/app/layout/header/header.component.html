@@ -1,19 +1,68 @@
 <div class="component">
     <div class="header">
     <div class="header-align">
-        <div class="navigation-align">
+        <div class="navigation-align" *ngIf="isLoggedIn()">
             <span class="nav-link" routerLinkActive="active-link" [routerLink]="AppRoutes.home" >
-                <i class="far fa-house"></i> 
-                <b>მთავარი</b> 
+                <i class="far fa-house"></i>
+                <b>მთავარი</b>
             </span>
             <span class="nav-link" routerLinkActive="active-link" [routerLink]="AppRoutes.users" >
-                <i class="fas fa-user"></i> 
-                <b>users</b> 
+                <i class="fas fa-user"></i>
+                <b>users</b>
+            </span>
+            <span class="nav-link" (click)="showAddAdminModal()">
+                <i class="fas fa-user-plus"></i>
+                <b>ადმინის დამატება</b>
+            </span>
+            <span class="nav-link" (click)="logout()">
+                <i class="fas fa-right-from-bracket"></i>
+                <b>გასვლა</b>
             </span>
         </div>
-        <div class="burger-icon-align" >
+        <div class="burger-icon-align" *ngIf="isLoggedIn()" >
             <span class="nav-link" routerLinkActive="active-link" (click)="openSidenav()"><i class="fas fa-bars"></i></span>
         </div>
     </div>
 </div>
+</div>
+
+<div class="modal-align" *ngIf="addAdminModalVisible">
+    <div class="modal-cancel" (click)="hideAddAdminModal()"></div>
+    <div class="modal">
+        <h3 style="margin-top: 0;">ახალი ადმინის დამატება</h3>
+        <div class="form-group">
+            <label for="adminName">ადმინის სახელი</label>
+            <input
+                id="adminName"
+                type="text"
+                [(ngModel)]="newAdmin.adminName"
+                class="form-input"
+            />
+        </div>
+        <div class="form-group">
+            <label for="adminUserName">მომხმარებლის სახელი</label>
+            <input
+                id="adminUserName"
+                type="text"
+                [(ngModel)]="newAdmin.userName"
+                class="form-input"
+                autocomplete="off"
+            />
+        </div>
+        <div class="form-group">
+            <label for="adminPassword">პაროლი</label>
+            <input
+                id="adminPassword"
+                type="password"
+                [(ngModel)]="newAdmin.password"
+                class="form-input"
+                autocomplete="new-password"
+            />
+        </div>
+        <div class="button-group">
+            <button class="sub-button" [disabled]="isCreatingAdmin" (click)="createAdmin()">
+                {{ isCreatingAdmin ? 'იტვირთება...' : 'დამატება' }}
+            </button>
+        </div>
+    </div>
 </div>
