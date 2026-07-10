@@ -6,4 +6,5 @@ export const AppRoutes = {
   addShop: '/add-shop/',
   users: '/users',
   login: '/login',
+  shopPayments: '/shop-payments/',
 };

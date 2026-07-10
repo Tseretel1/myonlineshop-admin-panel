@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
-import { AdminService, PayScheduleDto } from '../../services/admin.service';
+import { AdminService } from '../../services/admin.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { extractErrorMessage } from '../../shared/http-error.util';
 
 @Component({
   selector: 'app-shop-details',
@@ -41,13 +40,12 @@ export class ShopDetailsComponent {
         this.shopId = Number(id);
         this.loadShop();
         this.getShopStats();
-        this.loadPayments();
       }
     }
 
   ngOnInit(): void {
   }
-  
+
   shopId:number = 0;
   loadShop(): void {
     this.service.getShopById(this.shopId).subscribe({
@@ -68,25 +66,6 @@ export class ShopDetailsComponent {
         this.shopStats = resp;
       },
     );
-  }
-
-  payments: PayScheduleDto[] = [];
-  isLoadingPayments: boolean = false;
-  paymentsErrorMessage: string = '';
-  selectedYear: number = new Date().getFullYear();
-  loadPayments(): void {
-    this.isLoadingPayments = true;
-    this.paymentsErrorMessage = '';
-    this.service.getPayScheduleByShop(this.shopId, this.selectedYear).subscribe({
-      next: (resp) => {
-        this.payments = resp;
-        this.isLoadingPayments = false;
-      },
-      error: (err) => {
-        this.paymentsErrorMessage = extractErrorMessage(err);
-        this.isLoadingPayments = false;
-      }
-    });
   }
 
   RollBack(): void {

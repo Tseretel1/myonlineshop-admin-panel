@@ -279,6 +279,14 @@
         border: 2px solid transparent;
         // background: #00f2ea;
         background: #1a9a25;
+        &.payments-nav-btn {
+          background: #3b82f6;
+          flex: 0 0 auto;
+          cursor: pointer;
+        }
+        &.payments-nav-btn:hover {
+          background: #2563eb;
+        }
         i {
           color: white;
         }
