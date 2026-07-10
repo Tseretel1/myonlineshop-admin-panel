@@ -38,7 +38,13 @@
       (click)="openMonthModal(m)"
     >
       <span class="month-name">{{ m.name }}</span>
-      <i class="fas" [class.fa-check]="m.isPaid" [class.fa-close]="!m.isPaid"></i>
+
+      <ng-container *ngIf="m.isPaid && m.payment">
+        <span class="month-amount">{{ m.payment.payAmount | number:'1.2-2' }} ₾</span>
+        <span class="month-date">{{ m.payment.payDate | date:'yyyy-MM-dd' }}</span>
+      </ng-container>
+
+      <i class="fas fa-close" *ngIf="!m.isPaid"></i>
     </div>
   </div>
 
