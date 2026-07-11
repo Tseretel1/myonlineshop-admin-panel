@@ -254,6 +254,22 @@ uploadPhotoToServer() {
     });
   }
 
+  subscriptionModalVisible: boolean = false;
+  openSubscriptionModal(){
+    this.subscriptionModalVisible = true;
+  }
+  hideSubscriptionModal(){
+    this.subscriptionModalVisible = false;
+  }
+  addSubscription(subName: string){
+    this.service.ChangeSubscription({ shopId: this.shopId, subscription: subName }).subscribe({
+      next: () => {
+        this.shop.subscription = subName;
+        this.hideSubscriptionModal();
+      }
+    });
+  }
+
   logout(){
     Swal.fire({
       showConfirmButton: true,

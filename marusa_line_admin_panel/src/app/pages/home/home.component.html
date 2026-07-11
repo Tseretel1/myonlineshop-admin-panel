@@ -25,7 +25,7 @@
           <span  class="payment-badge" [ngClass]="{'nosub':shop.subscription == '','minimal':shop.subscription == 'სტანდარტული',}" (click)="showModal(shop.id)">
             <b style="display: flex; gap: 10px; align-items: center;">
                 <p>
-                    <i class="fas fa-close" style="color: red;" *ngIf="!shop.subscription"> </i>
+                    <i class="fas fa-close" *ngIf="!shop.subscription"> </i>
                 </p>
                 {{shop.subscription}}
                 <i class="fas fa-crown" style="color: yellow;text-shadow: 0px 0px 1px black;; font-size: 22px;" *ngIf="shop.subscription=='პრემიუმი'"> </i>
@@ -111,9 +111,9 @@
     <div class="modal-cancel" (click)="hideModal()"></div>
     <div class="modal">
         <div class="button-group" >
-            <button class="sub-button"  [ngClass]="{'chosen-sub':openedShop.subscription==''}" (click)="addSubscription('')"><i class="fas fa-close" style="color: red;"></i></button>
+            <button class="sub-button"  [ngClass]="{'chosen-sub-cancel':openedShop.subscription==''}" (click)="addSubscription('')"><i class="fas fa-close"></i></button>
             <button class="sub-button" [ngClass]="{'chosen-sub':openedShop.subscription=='სტანდარტული'}" (click)="addSubscription('სტანდარტული')">სტანდარტული</button>
-            <button class="sub-button"  [ngClass]="{'chosen-sub':openedShop.subscription=='პრემიუმი'}" (click)="addSubscription('პრემიუმი')">პრემიუმი</button>
+            <button class="sub-button"  [ngClass]="{'chosen-sub-premium':openedShop.subscription=='პრემიუმი'}" (click)="addSubscription('პრემიუმი')">პრემიუმი</button>
         </div>
     </div>
 </div>

@@ -25,9 +25,9 @@
 
       <div class="profile-content">
         <div class="form-group">
-             <button class="btn-save">
-                {{shop.subscription}} 
-                <i class="fas fa-close" style="color: red;" *ngIf="!shop.subscription"></i> 
+             <button class="btn-save" [ngClass]="{'sub-status-none':!shop.subscription,'sub-status-premium':shop.subscription=='პრემიუმი'}" (click)="openSubscriptionModal()">
+                {{shop.subscription}}
+                <i class="fas fa-close" *ngIf="!shop.subscription"></i>
                 <i class="fas fa-crown" style="color: orange; " *ngIf="shop.subscription=='პრემიუმი'"> </i>
             </button>
             <button class="btn-save" (click)="openEmailModal()">
@@ -191,6 +191,17 @@
         </div>
       </div>
     </div>
+
+<div class="modal-align" *ngIf="subscriptionModalVisible">
+  <div class="modal-cancel" (click)="hideSubscriptionModal()"></div>
+  <div class="modal">
+    <div class="button-group">
+        <button class="sub-button" [ngClass]="{'chosen-sub-cancel':shop.subscription==''}" (click)="addSubscription('')"><i class="fas fa-close"></i></button>
+        <button class="sub-button" [ngClass]="{'chosen-sub':shop.subscription=='სტანდარტული'}" (click)="addSubscription('სტანდარტული')">სტანდარტული</button>
+        <button class="sub-button" [ngClass]="{'chosen-sub-premium':shop.subscription=='პრემიუმი'}" (click)="addSubscription('პრემიუმი')">პრემიუმი</button>
+    </div>
+  </div>
+</div>
 
 <div class="modal-align" *ngIf="emailModalVisible">
   <div class="modal-cancel" (click)="hideEmailModal()"></div>

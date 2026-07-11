@@ -292,10 +292,11 @@
         }
     }
     .nosub{
-      background-color: black;
-      border: 1px solid black;
+      background-color: #dc3545;
+      border: 1px solid #dc3545;
       .fas{
         font-size: 20px;
+        color: white;
       }
     }
     .minimal{
@@ -508,10 +509,22 @@
                 border: none;
                 cursor: pointer;
                 width: 200px;
-                background-color: rgba(0, 0, 0, 0.521);     
+                background-color: rgba(0, 0, 0, 0.521);
+                .fa-close{
+                    color: red;
+                }
             }
             .chosen-sub{
                 background: #667eea;
+            }
+            .chosen-sub-premium{
+                background: #1a9a25;
+            }
+            .chosen-sub-cancel{
+                background: #dc3545;
+                .fa-close{
+                    color: white;
+                }
             }
         }
     }
