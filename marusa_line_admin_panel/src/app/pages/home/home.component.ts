@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AdminService } from '../../services/admin.service';
+import { AdminService, PayScheduleDto } from '../../services/admin.service';
 import { Shop } from '../shop-details/shop-details.component';
 import { AppRoutes } from '../../shared/appRoutes';
 import { FormsModule } from '@angular/forms';
@@ -21,6 +21,7 @@ export class HomeComponent {
     private router: Router
   ) {
     this.loadeveryShop();
+    this.loadLatestPayments();
   }
 
   loadeveryShop(): void {
@@ -30,6 +31,25 @@ export class HomeComponent {
         this.OldshopsList = this.shopsList;
       },
     );
+  }
+
+  latestPayments: { [shopId: number]: PayScheduleDto } = {};
+  loadLatestPayments(): void {
+    this.adminService.getLatestPaySchedulePerShop().subscribe(
+      (data) => {
+        this.latestPayments = {};
+        for (const payment of data) {
+          this.latestPayments[payment.shopId] = payment;
+        }
+      },
+    );
+  }
+  isPaidThisMonth(shopId: number): boolean {
+    const payment = this.latestPayments[shopId];
+    if (!payment) return false;
+    const payDate = new Date(payment.payDate);
+    const now = new Date();
+    return payDate.getFullYear() === now.getFullYear() && payDate.getMonth() === now.getMonth();
   }
 
   copyToClipboard(text: string): void {

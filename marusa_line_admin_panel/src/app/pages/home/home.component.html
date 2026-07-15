@@ -33,11 +33,19 @@
           </span>
           <span
             class="payment-badge payments-nav-btn"
+            [ngClass]="isPaidThisMonth(shop.id) ? 'paid' : 'unpaid'"
             [routerLink]="AppRoutes.shopPayments + shop.id"
             (click)="$event.stopPropagation()"
             title="გადახდები"
           >
-            <i class="fas fa-money-bill-wave"></i>
+            <i class="fas fa-credit-card"></i>
+            <span class="payment-meta" *ngIf="latestPayments[shop.id]">
+              <span class="payment-date">{{ latestPayments[shop.id].payDate | date:'dd.MM.yyyy' }}</span>
+              <span class="payment-amount">{{ latestPayments[shop.id].payAmount | number:'1.2-2' }} ₾</span>
+            </span>
+            <span class="payment-meta" *ngIf="!latestPayments[shop.id]">
+              <span class="payment-date">გადახდის გარეშე</span>
+            </span>
           </span>
         </div>
       </div>

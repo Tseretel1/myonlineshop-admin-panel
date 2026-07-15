@@ -280,12 +280,46 @@
         // background: #00f2ea;
         background: #1a9a25;
         &.payments-nav-btn {
-          background: #3b82f6;
+          flex-direction: column;
+          background: #6b7280;
           flex: 0 0 auto;
           cursor: pointer;
-        }
-        &.payments-nav-btn:hover {
-          background: #2563eb;
+          gap: 4px;
+          padding: 8px 12px;
+
+          i {
+            font-size: 18px;
+          }
+
+          .payment-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+            font-size: 11px;
+            line-height: 1.2;
+
+            .payment-date {
+              opacity: 0.9;
+            }
+
+            .payment-amount {
+              font-weight: 700;
+            }
+          }
+
+          &.paid {
+            background: #1a9a25;
+          }
+          &.paid:hover {
+            background: #16821f;
+          }
+          &.unpaid {
+            background: #e08e0b;
+          }
+          &.unpaid:hover {
+            background: #c67a08;
+          }
         }
         i {
           color: white;

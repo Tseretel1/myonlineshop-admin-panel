@@ -61,6 +61,9 @@ export class AdminService {
   getPayScheduleByShop(shopId:number, year:number): Observable<PayScheduleDto[]> {
     return this.http.get<PayScheduleDto[]>(this.apiUrl+`Admin/get-pay-schedule-by-shop?shopId=${shopId}&year=${year}`);
   }
+  getLatestPaySchedulePerShop(): Observable<PayScheduleDto[]> {
+    return this.http.get<PayScheduleDto[]>(this.apiUrl+`Admin/get-latest-pay-schedule`);
+  }
   createPaySchedule(payment:CreatePayScheduleDto): Observable<number> {
     return this.http.post<number>(this.apiUrl+`Admin/create-pay-schedule`,payment);
   }
